@@ -3,6 +3,7 @@ License.txt
 Manifest.txt
 README.txt
 Rakefile
+bin/archangel
 config/hoe.rb
 config/requirements.rb
 fixtures/config_with_2_profiles.archangel
@@ -11,6 +12,7 @@ fixtures/site_with_mongrels.archangel
 lib/archangel.rb
 lib/archangel/configuration.rb
 lib/archangel/configuration_builder.rb
+lib/archangel/god.rb
 lib/archangel/mongrel.rb
 lib/archangel/mongrel_builder.rb
 lib/archangel/nginx.rb
@@ -30,6 +32,7 @@ tasks/deployment.rake
 tasks/environment.rake
 tasks/rspec.rake
 tasks/website.rake
+views/archangel.god
 views/nginx/main.erb
 views/nginx/server.erb
 views/nginx/upstream.erb

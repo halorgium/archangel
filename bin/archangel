@@ -1,0 +1,76 @@
+#!/usr/bin/env ruby
+#
+#  Created on 2008-2-13.
+#  Copyright (c) 2008. All rights reserved.
+
+begin
+  require 'rubygems'
+rescue LoadError
+  # no rubygems to load, so we fail silently
+end
+
+require 'optparse'
+
+OPTIONS = {
+  :careful => true
+}
+MANDATORY_OPTIONS = %w( config )
+
+parser = OptionParser.new do |opts|
+  opts.banner = <<BANNER
+This application is wonderful because...
+
+Usage: #{File.basename($0)} [options] command
+
+Commands: 
+- build: Build the configuration files for an application
+   (Requires -t/--target)
+
+Options are:
+BANNER
+  opts.separator ""
+  opts.on("-c", "--config=PATH", String,
+          "The path to the archangel configuration") { |path| OPTIONS[:config] = path }
+  opts.on("-t", "--target=APP", String,
+          "The target application for building") { |app| OPTIONS[:target] = app }
+  opts.on("-f", "--force",
+          "The target application for building") { |force| OPTIONS[:careful] = false }
+  opts.on("-h", "--help",
+          "Show this help message.") { puts opts; exit }
+  opts.parse!(ARGV)
+
+  if MANDATORY_OPTIONS && MANDATORY_OPTIONS.find { |option| OPTIONS[option.to_sym].nil? }
+    puts opts; exit
+  end
+end
+
+path = OPTIONS[:path]
+
+command = ARGV.shift
+case command
+when "check"
+  require 'archangel'
+  Archangel::Configuration.evaluate(OPTIONS[:config])
+  puts "All ok!"
+when "build"
+  if OPTIONS[:target].nil?
+    puts "[ERROR] build requires a target"
+    puts
+    puts parser
+    exit
+  end
+  puts "Building for #{OPTIONS[:config]} for #{OPTIONS[:target]}"
+  require 'archangel'
+  c = Archangel::Configuration.evaluate(OPTIONS[:config])
+  c.load_balancer_for(OPTIONS[:target]).write_configs(OPTIONS[:careful])
+  puts "All done!"
+when "monitor", "ascend"
+  puts "Telling god what to do!"
+  god_file = File.basename(OPTIONS[:config], ".archangel") + ".god"
+  puts `/usr/bin/env god start #{god_file}`
+  puts "Told!"
+else
+  puts "[ERROR] You need to provide a command"
+  puts
+  puts parser
+end

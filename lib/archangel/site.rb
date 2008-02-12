@@ -8,7 +8,7 @@ module Archangel
     
     def watch
       upstreams.each do |upstream|
-        God.watch do |w|
+        ::God.watch do |w|
           upstream.submit(w)
         end
       end

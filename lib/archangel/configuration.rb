@@ -1,3 +1,6 @@
+require 'ostruct'
+require 'erb'
+
 module Archangel
   class Configuration
     def self.evaluate(filename)
@@ -40,7 +43,7 @@ module Archangel
     
     def load_balancer_for(name)
       ary = load_balancers.find do |n,load_balancer|
-        n == name
+        n.to_sym == name.to_sym
       end
       ary && ary.last
     end
@@ -51,7 +54,7 @@ module Archangel
     
     def upstream_for(name)
       ary = upstreams.find do |n,upstream|
-        n == name
+        n.to_sym == name.to_sym
       end
       ary && ary.last
     end
@@ -60,8 +63,32 @@ module Archangel
       @sites ||= []
     end
     
+    def sites_running_on(load_balancer)
+      sites.select do |site|
+        site.load_balancer_name == load_balancer
+      end
+    end
+    
+    def render_with(template, attributes)
+      attributes = {:configuration => self}.merge(attributes)
+      render_binding = OpenStruct.new(attributes).send(:binding)
+      view_for(template).result(render_binding)
+    end
+    
+    def view_for(template)
+      ERB.new(File.read(view_path_for(template)), nil, ">")
+    end
+    
+    def view_path_for(template)
+       "#{view_root}/#{template}.erb"
+    end
+    
+    def view_root
+      File.dirname(__FILE__) + "/../../views"
+    end
+    
     def watch
-      [load_balancers, sites].each do |collection|
+      [load_balancers.values, sites].each do |collection|
         collection.each do |instance|
           instance.watch
         end
@@ -69,5 +96,3 @@ module Archangel
     end
   end
 end
-
-
