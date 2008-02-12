@@ -1,0 +1,2 @@
+profile :rails, "/home/deploy/%s/current/public"
+profile :default, "/home/www/%s"

@@ -1,0 +1,60 @@
+server {
+  listen 80;
+
+  client_max_body_size 50M;
+
+  server_name <%= site.hostnames.join(" ") %>;
+
+  root <%= site.public_path %>;
+
+  access_log  <%= site.access_log %> main;
+
+  if (-f $document_root/system/maintenance.html) {
+    rewrite ^(.*)$ /system/maintenance.html last;
+    break;
+  }
+
+  location / {
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Host $http_host;
+    proxy_redirect false;
+    proxy_max_temp_file_size 0;
+    if (-f $request_filename) {
+      break;
+    }
+    if (-f $request_filename/index.html) {
+      rewrite (.*) $1/index.html break;
+    }
+
+    if (-f $request_filename.html) {
+      rewrite (.*) $1.html break;
+    }
+
+<% if site.upstreams.any? %>
+    if (!-f $request_filename) {
+      proxy_pass http://<%= site.name %>;
+      break;
+    }
+<% end %>
+  }
+
+  error_page 500 502 503 504 /50x.html;
+  location = /50x.html {
+    root <%= site.public_path %>;
+  }
+
+<% if site.no_www? %>
+  if ($host ~* "www") {
+    rewrite ^(.*)$ http://<%= site.hostnames.first.sub(/^\./, '') %>$1 permanent;
+    break;
+  }
+<% end %>
+
+<% if site.always_www? %>
+  if ($host != "www.<%= site.hostnames.first %>") {
+    rewrite ^(.*)$ http://www.<%= site.hostnames.first %>$1 permanent;
+    break;
+  }
+<% end %>
+}

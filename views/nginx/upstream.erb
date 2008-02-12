@@ -1,0 +1,8 @@
+upstream <%= site.name %> {
+  <% if site.fair? %>
+    fair;
+  <% end %>
+  <% site.upstreams.each do |upstream| %>
+    server <%= upstream.host_port %>;
+  <% end %>
+}

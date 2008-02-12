@@ -1,0 +1,9 @@
+profile :merb, "/home/merbivore/%s/public"
+
+load_balancer :nginx
+
+site :basecamp, :on => :nginx do
+  hostnames "basecamp.or.cz"
+  profile :merb
+  mongrels 10001..10004
+end
