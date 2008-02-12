@@ -6,6 +6,9 @@ module Archangel
     attr_writer :base_path, :mime_types, :pid_file, :error_log, :access_log
     attr_accessor :uid, :gid
     
+    def watch
+    end
+    
     def file(key)
       case key
       when :mime_types

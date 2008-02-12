@@ -6,6 +6,14 @@ module Archangel
     attr_reader :name, :options, :configuration
     attr_accessor :hostnames, :profile_name
     
+    def watch
+      upstreams.each do |upstream|
+        God.watch do |w|
+          upstream.submit(w)
+        end
+      end
+    end
+    
     def upstreams
       @upstreams ||= []
     end

@@ -59,6 +59,14 @@ module Archangel
     def sites
       @sites ||= []
     end
+    
+    def watch
+      [load_balancers, sites].each do |collection|
+        collection.each do |instance|
+          instance.watch
+        end
+      end
+    end
   end
 end
 
