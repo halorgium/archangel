@@ -43,7 +43,7 @@ module Archangel
     end
     
     def site_name
-      site.name
+      site.name.to_s
     end
     
     def root_path
