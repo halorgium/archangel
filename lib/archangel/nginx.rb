@@ -81,8 +81,6 @@ module Archangel
     def watch
       ::God.watch do |w|
         w.name = "nginx"
-        w.uid = "root"
-        w.gid = "wheel"
         w.pid_file = file(:pid_file)
         w.interval = 30.seconds
         w.start = start_command
