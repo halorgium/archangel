@@ -1,6 +1,7 @@
 module Archangel
   class Site
     def initialize(name, options, configuration)
+      raise ArgumentError, "`default' is a reserved site name" if name.to_s == "default"
       @name, @options, @configuration, @hostnames, @fair = name, options, configuration, [], true
     end
     attr_reader :name, :options, :configuration

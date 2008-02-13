@@ -5,11 +5,13 @@ module Archangel
     def initialize(configuration)
       @configuration = configuration
     end
-    attr_writer :base_path, :mime_types, :pid_file, :error_log, :access_log
+    attr_writer :base_path, :default_root, :mime_types, :pid_file, :error_log, :access_log
     attr_accessor :uid, :gid
     
     def file(key)
       case key
+      when :default_root
+        @default_root || "#{base_path}/default/public"
       when :mime_types
         @mime_types || "#{base_path}/conf/mime.types"
       when :pid_file

@@ -1,0 +1,8 @@
+profile :rails, "/home/%s/public"
+
+load_balancer :nginx
+
+site :default do
+  hostnames "host.domain.com"
+  profile :rails
+end

@@ -127,4 +127,15 @@ module Archangel
       @config.sites.first.upstreams.size.should == 4
     end
   end
+  
+  describe Configuration, "for site_called_default" do
+    include ConfigurationHelpers
+    
+    it "should raise an exception" do
+      File.should_receive(:read).and_return(fixture_data(:site_called_default))
+      lambda {
+        Configuration.evaluate("site_called_default")
+      }.should raise_error(ArgumentError)
+    end
+  end
 end

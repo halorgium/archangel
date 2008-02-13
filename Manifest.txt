@@ -8,6 +8,7 @@ config/hoe.rb
 config/requirements.rb
 fixtures/config_with_2_profiles.archangel
 fixtures/single_site.archangel
+fixtures/site_called_default.archangel
 fixtures/site_with_mongrels.archangel
 lib/archangel.rb
 lib/archangel/configuration.rb

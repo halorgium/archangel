@@ -16,6 +16,10 @@ module Archangel
       @nginx.base_path = base_path
     end
     
+    def default_root(default_root)
+      @nginx.default_root = default_root
+    end
+    
     def mime_types(mime_types)
       @nginx.mime_types = mime_types
     end

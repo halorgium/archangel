@@ -31,6 +31,17 @@ http {
   gzip_types          text/plain text/html text/css application/x-javascript text/xml 
                       application/xml application/xml+rss text/javascript;
 
+  server {
+    listen 80;
+
+    client_max_body_size 50M;
+
+    root <%= nginx.file(:default_root) %>;
+
+    access_log  <%= nginx.file(:access_log) % "default" %> main;
+  }
+
+
   include <%= nginx.base_path %>/upstreams/*.conf;
   include <%= nginx.base_path %>/servers/*.conf;
 }
