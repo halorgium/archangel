@@ -12,6 +12,14 @@ module Archangel
       @site.profile_name = name
     end
     
+    def fair
+      @site.fair = true
+    end
+    
+    def unfair
+      @site.fair = false
+    end
+    
     def mongrels(*args)
       options = args.last.is_a?(Hash) ? args.pop : {}
       args.each do |ports|
