@@ -6,7 +6,7 @@ module Archangel
     end
     attr_reader :name, :options, :configuration
     attr_accessor :hostnames, :aliases, :profile_name, :fair
-    attr_writer :port
+    attr_writer :port, :path
     
     def watch
       upstreams.each do |upstream|
@@ -28,8 +28,12 @@ module Archangel
       @profile ||= configuration.profile_for(profile_name)
     end
     
+    def path
+      @path || name
+    end
+    
     def root_path
-      profile[:path] % name
+      profile[:path] % path
     end
     
     def public_path

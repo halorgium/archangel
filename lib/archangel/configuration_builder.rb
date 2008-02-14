@@ -34,7 +34,8 @@ module Archangel
     
     def site(name, *args, &block)
       options = args.last.is_a?(Hash) ? args.pop : {}
-      site = Site.new(name, options, @configuration)
+      raise ArgumentError, "`#{name}' already has been defined" if @configuration.site_names.include?(name.to_s)
+      site = Site.new(name.to_s, options, @configuration)
       b = SiteBuilder.new(site)
       b.instance_eval(&block)
       @configuration.sites << site

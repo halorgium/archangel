@@ -63,6 +63,12 @@ module Archangel
       @sites ||= []
     end
     
+    def site_names
+      sites.map do |s|
+        s.name
+      end
+    end
+    
     def sites_running_on(load_balancer)
       sites.select do |site|
         site.load_balancer_name == load_balancer

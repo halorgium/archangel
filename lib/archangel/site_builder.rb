@@ -12,6 +12,10 @@ module Archangel
       @site.aliases = names
     end
     
+    def path(path)
+      @site.path = path
+    end
+    
     def port(number)
       @site.port = number
     end

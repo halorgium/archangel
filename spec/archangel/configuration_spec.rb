@@ -77,7 +77,7 @@ module Archangel
     end
     
     it "should have a site called :twitter" do
-      @config.sites.first.name.should == :twitter
+      @config.sites.first.name.should == "twitter"
     end
     
     it "should have a site with profile_name :rails" do
@@ -114,7 +114,7 @@ module Archangel
     end
     
     it "should have a site called :twitter" do
-      @config.sites.first.name.should == :basecamp
+      @config.sites.first.name.should == "basecamp"
     end
     
     it "should be hosted on nginx" do
