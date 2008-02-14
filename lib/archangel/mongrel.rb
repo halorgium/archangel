@@ -23,7 +23,7 @@ module Archangel
     end
     
     def name
-      "#{site.name}-mongrel-#{port}"
+      "#{site_name}-mongrel-#{port}"
     end
     
     def pid_file
@@ -43,7 +43,7 @@ module Archangel
     end
     
     def site_name
-      site.name.to_s
+      "site-#{site.name}"
     end
     
     def root_path
