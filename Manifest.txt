@@ -26,6 +26,7 @@ script/destroy
 script/generate
 setup.rb
 spec/archangel/configuration_spec.rb
+spec/archangel/mongrel_spec.rb
 spec/archangel_spec.rb
 spec/spec.opts
 spec/spec_helper.rb

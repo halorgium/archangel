@@ -1,7 +1,7 @@
 module Archangel
   class Mongrel
     def self.for(site, enumerable_or_number)
-      if enumerable_or_number.respond_to?(:to_a)
+      if enumerable_or_number.respond_to?(:map)
         enumerable_or_number.map do |port|
           m = new
           m.site, m.port = site, port
