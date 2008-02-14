@@ -2,10 +2,10 @@ module Archangel
   class Site
     def initialize(name, options, configuration)
       raise ArgumentError, "`default' is a reserved site name" if name.to_s == "default"
-      @name, @options, @configuration, @hostnames, @fair = name, options, configuration, [], true
+      @name, @options, @configuration, @hostnames, @aliases, @fair = name, options, configuration, [], [], true
     end
     attr_reader :name, :options, :configuration
-    attr_accessor :hostnames, :profile_name, :fair
+    attr_accessor :hostnames, :aliases, :profile_name, :fair
     
     def watch
       upstreams.each do |upstream|
@@ -45,14 +45,6 @@ module Archangel
     
     def fair?
       fair
-    end
-    
-    def no_www?
-      false
-    end
-    
-    def always_www?
-      false
     end
   end
 end

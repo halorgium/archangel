@@ -43,18 +43,16 @@ server {
   location = /50x.html {
     root <%= site.public_path %>;
   }
-
-<% if site.no_www? %>
-  if ($host ~* "www") {
-    rewrite ^(.*)$ http://<%= site.hostnames.first.sub(/^\./, '') %>$1 permanent;
-    break;
-  }
-<% end %>
-
-<% if site.always_www? %>
-  if ($host != "www.<%= site.hostnames.first %>") {
-    rewrite ^(.*)$ http://www.<%= site.hostnames.first %>$1 permanent;
-    break;
-  }
-<% end %>
 }
+
+<% if site.aliases.any? %>
+server {
+  listen 80;
+
+  client_max_body_size 50M;
+
+  server_name <%= site.aliases.join(" ") %>;
+  
+  rewrite ^/(.*)$ http://<%= site.hostnames.first.sub(/^\./, '') %>/$1 permanent;
+}
+<% end %>

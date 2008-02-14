@@ -8,6 +8,10 @@ module Archangel
       @site.hostnames = names
     end
     
+    def aliases(*names)
+      @site.aliases = names
+    end
+    
     def profile(name)
       @site.profile_name = name
     end
