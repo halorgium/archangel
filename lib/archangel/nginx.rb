@@ -66,7 +66,7 @@ module Archangel
     
     def write_configs(careful = true)
       render.each do |path,data|
-        filename = "#{base_path}/#{path}"
+        filename = "#{Dir.pwd}/#{path}"
         if File.exist?(filename) && careful
           $stderr.puts "> File #{filename} already exists; use -f to force"
         else
