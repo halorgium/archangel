@@ -17,7 +17,7 @@ module Archangel
     end
     
     def port
-      @port || 80
+      @port || default_port
     end
     
     def upstreams
@@ -46,6 +46,32 @@ module Archangel
     
     def access_log
       load_balancer.file(:access_log) % name
+    end
+    
+    def ssl?
+      false
+    end
+    
+    def protocol
+      ssl? ? "https" : "http"
+    end
+    
+    def default_port
+      ssl? ? 443 : 80
+    end
+    
+    def default_port?
+      port == default_port
+    end
+    
+    def main_hostname
+      hostnames.first.sub(/^\./, '')
+    end
+    
+    def main_url
+      url = "#{protocol}://#{main_hostname}"
+      url << ":#{port}" unless default_port?
+      url
     end
     
     def fair?

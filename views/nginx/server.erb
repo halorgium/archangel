@@ -53,6 +53,6 @@ server {
 
   server_name <%= site.aliases.join(" ") %>;
   
-  rewrite ^/(.*)$ http://<%= site.hostnames.first.sub(/^\./, '') %>/$1 permanent;
+  rewrite ^/(.*)$ <%= site.main_url %>/$1 permanent;
 }
 <% end %>
