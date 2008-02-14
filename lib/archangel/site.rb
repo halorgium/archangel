@@ -6,6 +6,7 @@ module Archangel
     end
     attr_reader :name, :options, :configuration
     attr_accessor :hostnames, :aliases, :profile_name, :fair
+    attr_writer :port
     
     def watch
       upstreams.each do |upstream|
@@ -13,6 +14,10 @@ module Archangel
           upstream.submit(w)
         end
       end
+    end
+    
+    def port
+      @port || 80
     end
     
     def upstreams

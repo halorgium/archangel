@@ -1,5 +1,5 @@
 server {
-  listen 80;
+  listen <%= site.port %>;
 
   client_max_body_size 50M;
 
@@ -47,7 +47,7 @@ server {
 
 <% if site.aliases.any? %>
 server {
-  listen 80;
+  listen <%= site.port %>;
 
   client_max_body_size 50M;
 
