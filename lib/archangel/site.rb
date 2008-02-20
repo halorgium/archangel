@@ -6,7 +6,7 @@ module Archangel
     end
     attr_reader :name, :options, :configuration
     attr_accessor :hostnames, :aliases, :profile_name, :fair
-    attr_writer :port, :path
+    attr_writer :port, :template, :path
     
     def watch
       upstreams.each do |upstream|
@@ -26,6 +26,10 @@ module Archangel
     
     def profile
       @profile ||= configuration.profile_for(profile_name)
+    end
+
+    def template
+      @template || "app"
     end
     
     def path
@@ -80,6 +84,14 @@ module Archangel
     
     def fair?
       fair
+    end
+
+    def render(render_attributes)
+      views = {}
+      attributes = render_attributes.merge(:site => self)
+      views["servers/#{name}.conf"]   = @configuration.render_with("nginx/#{template}", attributes)
+      views["upstreams/#{name}.conf"] = @configuration.render_with("nginx/upstream", attributes)
+      views
     end
   end
 end

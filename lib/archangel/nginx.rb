@@ -5,7 +5,7 @@ module Archangel
     def initialize(configuration)
       @configuration = configuration
     end
-    attr_writer :base_path, :default_root, :mime_types, :pid_file, :error_log, :access_log
+    attr_writer :base_path, :port, :default_root, :mime_types, :pid_file, :error_log, :access_log
     attr_accessor :uid, :gid
     
     def file(key)
@@ -23,6 +23,10 @@ module Archangel
       else
         raise IndexError, "#{key.inspect} not found"
       end
+    end
+
+    def port
+      @port || 80
     end
     
     def base_path
@@ -57,9 +61,7 @@ module Archangel
       views = {}
       views["nginx.conf"] = @configuration.render_with('nginx/main', render_attributes)
       @configuration.sites_running_on(:nginx).each do |site|
-        attributes = render_attributes.merge(:site => site)
-        views["servers/#{site.name}.conf"]   = @configuration.render_with('nginx/server', attributes)
-        views["upstreams/#{site.name}.conf"] = @configuration.render_with('nginx/upstream', attributes)
+        views.merge!(site.render(render_attributes))
       end
       views
     end

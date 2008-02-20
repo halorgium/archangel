@@ -23,6 +23,10 @@ module Archangel
     def profile(name)
       @site.profile_name = name
     end
+
+    def template(name)
+      @site.template = name
+    end
     
     def fair
       @site.fair = true

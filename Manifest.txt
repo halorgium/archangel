@@ -21,10 +21,10 @@ lib/archangel/nginx_builder.rb
 lib/archangel/site.rb
 lib/archangel/site_builder.rb
 lib/archangel/version.rb
-log/debug.log
 script/destroy
 script/generate
 setup.rb
+spec/archangel/configuration_builder_spec.rb
 spec/archangel/configuration_spec.rb
 spec/archangel/mongrel_spec.rb
 spec/archangel/site_builder_spec.rb
@@ -36,6 +36,7 @@ tasks/environment.rake
 tasks/rspec.rake
 tasks/website.rake
 views/archangel.god
+views/nginx/app.erb
 views/nginx/main.erb
-views/nginx/server.erb
+views/nginx/simple.erb
 views/nginx/upstream.erb

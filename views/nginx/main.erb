@@ -33,7 +33,7 @@ http {
                       application/xml application/xml+rss text/javascript;
 
   server {
-    listen 80;
+    listen <%= nginx.port %>;
 
     client_max_body_size 50M;
 
@@ -45,4 +45,5 @@ http {
 
   include <%= nginx.base_path %>/upstreams/*.conf;
   include <%= nginx.base_path %>/servers/*.conf;
+  include <%= nginx.base_path %>/custom/*.conf;
 }

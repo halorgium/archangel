@@ -1,0 +1,28 @@
+server {
+  listen <%= site.port %>;
+
+  client_max_body_size 50M;
+
+  server_name <%= site.hostnames.join(" ") %>;
+
+  root <%= site.root_path %>;
+
+  access_log  <%= site.access_log %> main;
+
+  error_page 500 502 503 504 /50x.html;
+  location = /50x.html {
+    root <%= site.root_path %>;
+  }
+}
+
+<% if site.aliases.any? %>
+server {
+  listen <%= site.port %>;
+
+  client_max_body_size 50M;
+
+  server_name <%= site.aliases.join(" ") %>;
+  
+  rewrite ^/(.*)$ <%= site.main_url %>/$1 permanent;
+}
+<% end %>

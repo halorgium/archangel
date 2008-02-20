@@ -11,6 +11,10 @@ module Archangel
     def gid(gid)
       @nginx.gid = gid
     end
+
+    def port(number)
+      @nginx.port = number
+    end
     
     def base_path(base_path)
       @nginx.base_path = base_path

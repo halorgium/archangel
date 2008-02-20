@@ -1,3 +1,4 @@
+<% if site.upstreams.any? %>
 upstream <%= site.name %> {
   <% if site.fair? %>
     fair;
@@ -6,3 +7,4 @@ upstream <%= site.name %> {
     server <%= upstream.host_port %>;
   <% end %>
 }
+<% end %>
