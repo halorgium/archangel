@@ -34,7 +34,7 @@ BANNER
   opts.on("-t", "--target=APP", String,
           "The target application for building") { |app| OPTIONS[:target] = app }
   opts.on("-f", "--force",
-          "The target application for building") { |force| OPTIONS[:careful] = false }
+          "Overwrite existing config files") { |force| OPTIONS[:careful] = false }
   opts.on("-h", "--help",
           "Show this help message.") { puts opts; exit }
   opts.parse!(ARGV)
